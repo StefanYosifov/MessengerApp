@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.20" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MessengerApp.Core.Services\MessengerApp.Core.Services.csproj" />
+    <ProjectReference Include="..\MessengerApp.Data.DbContext\MessengerApp.Data.DbContext.csproj" />
+    <ProjectReference Include="..\MessengerApp.Data.Models\MessengerApp.Data.Models.csproj" />
+    <ProjectReference Include="..\MessengerApp.Infrastucture.Exceptions\MessengerApp.Infrastucture.Exceptions.csproj" />
+    <ProjectReference Include="..\MessengerApp.ViewModels\MessengerApp.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
