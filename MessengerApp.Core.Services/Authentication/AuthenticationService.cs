@@ -42,7 +42,7 @@
 
             if (findUser == null)
             {
-                throw new ServiceExceptions(AuthenticationMessage.UserNameAlreadyExists);
+                throw new ServiceExceptions(AuthenticationMessage.UserNameDoesNotExist);
             }
 
             var result = await signInManager.CheckPasswordSignInAsync(findUser, loginModel.Password, false);
