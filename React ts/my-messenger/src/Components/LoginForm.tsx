@@ -1,5 +1,8 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
-import { Button, Checkbox, FormLabel, Typography, TextField, Card, CardContent } from "@mui/material"
+import { Button, Checkbox, FormLabel, Typography, TextField, Card, CardContent } from "@mui/material";
+import { useDispatch } from 'react-redux';
+import { login } from '../api/auth';
+import { setUserFromResponse } from '../app/features/UserData/userDataSlice';
 
 interface IFormInput {
     userName: string;
@@ -12,6 +15,8 @@ interface IForm {
 }
 
 
+
+
 const LoginForm: React.FC<IForm> = ({ variant, setVariant }) => {
 
     const { control, handleSubmit, formState: { errors, isSubmitting }, reset } = useForm({
@@ -22,8 +27,14 @@ const LoginForm: React.FC<IForm> = ({ variant, setVariant }) => {
         }
     });
 
-    const onSubmit: SubmitHandler<IFormInput> = data => {
+    const dispatch=useDispatch();
+
+    const onSubmit: SubmitHandler<IFormInput> = async data => {
         console.log(data)
+        const response=await login(data);
+        dispatch(setUserFromResponse(response.data));
+        console.log(response);
+        
         reset();
     };
 
