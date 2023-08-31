@@ -12,17 +12,21 @@ interface ILoginResponse{
     profilePicuteUrl:string,
 }
 
-const headers={
-    'Authorization' : '',
-    'Content-type' : 'application/json',
-    'Access-Control-Allow-Origin': '*'
+const headers = {
+    'Content-Type': 'application/json',
+    'Accept':'*',
 };
 
 export const login = async (data: ILoginRequest): Promise<AxiosResponse<ILoginResponse>> => {
     try {
-        const response = await axios.post<ILoginResponse>(`${baseUrl}/authenticate/login`, data,{headers});
+        console.log(data);
+        console.log(`${baseUrl}/authenticate/login`);
+        
+        const response = await axios.post<ILoginResponse>(`${baseUrl}/authenticate/login`, data, { headers });
         return response;
     } catch (error) {
+       console.log(error);
        throw error;
+       
     }
 };
