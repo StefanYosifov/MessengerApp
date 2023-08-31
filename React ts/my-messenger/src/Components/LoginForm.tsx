@@ -1,8 +1,9 @@
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { Button, Checkbox, FormLabel, Typography, TextField, Card, CardContent } from "@mui/material";
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { login } from '../api/auth';
-import { setUserFromResponse } from '../app/features/UserData/userDataSlice';
+import { setCredentials } from '../app/features/userSlice';
+import { RootState, useAppDispatch } from '../app/store';
 
 interface IFormInput {
     userName: string;
@@ -27,12 +28,14 @@ const LoginForm: React.FC<IForm> = ({ variant, setVariant }) => {
         }
     });
 
-    const dispatch=useDispatch();
+    const dispatch=useAppDispatch();
+    const user = useSelector((state: RootState) => state.auth.userInfo);
+    console.log(user);
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         console.log(data)
         const response=await login(data);
-        dispatch(setUserFromResponse(response.data));
+        dispatch(setCredentials(response.data));
         console.log(response);
         
         reset();
@@ -81,7 +84,7 @@ const LoginForm: React.FC<IForm> = ({ variant, setVariant }) => {
                         />
                         {errors.password?.message &&
                             <FormLabel color='warning' >{errors.password.message}</FormLabel>}
-                        <Button type='submit' variant='contained' disabled={isSubmitting}>Submit</Button>
+                        <Button type='submit' variant='contained'>Submit</Button>
                         <div className='flex'>
                             <Controller
                                 name='remember'
@@ -91,7 +94,7 @@ const LoginForm: React.FC<IForm> = ({ variant, setVariant }) => {
                             <FormLabel htmlFor='remember'>Remember me</FormLabel>
                         </div>
                         <Typography>
-                            <Button onClick={() => setVariant(!variant)}>
+                            <Button onClick={() => setVariant(!variant)} disabled={isSubmitting}>
                                 Already have an account? Click here to sign in
                             </Button>
                         </Typography>
