@@ -17,6 +17,7 @@
     <ProjectReference Include="..\MessengerApp.Data.Models\MessengerApp.Data.Models.csproj" />
     <ProjectReference Include="..\MessengerApp.Infrastucture.Constants\MessengerApp.Infrastucture.Constants.csproj" />
     <ProjectReference Include="..\MessengerApp.Infrastucture.Exceptions\MessengerApp.Infrastucture.Exceptions.csproj" />
+    <ProjectReference Include="..\MessengerApp.Infrastucture.Utilities\MessengerApp.Common.Utilities.csproj" />
     <ProjectReference Include="..\MessengerApp.ViewModels\MessengerApp.ViewModels.csproj" />
   </ItemGroup>
 
