@@ -13,12 +13,12 @@
 
         [Required]
         [ForeignKey("Sender")] public string SenderId { get; set; } = null!;
-        public ApplicationUser Sender { get; set; }
+        public ApplicationUser Sender { get; set; } = null!;
 
         [Required]
         [ForeignKey("Receiver")] public string ReceiverUserId { get; set; } = null!;
 
-        public ApplicationUser Receiver { get; set; }
+        public ApplicationUser Receiver { get; set; } = null!;
 
         public FriendRequestStatus Status { get; set; }  
     }

@@ -7,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+using MessengerApp.Common.Utilities.Mapping;
+using MessengerApp.Common.Utilities.UserService;
+using MessengerApp.Core.Services.Friends;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -48,11 +52,16 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-builder.Services.AddControllers();
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddMvc();
+builder.Services.AddControllers();
 
+
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IFriendService, FriendService>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddAutoMapper(typeof(ProfileMapper));
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -64,7 +73,9 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
         options.RoutePrefix = string.Empty;
     });
+    app.UseCors(policyBuilder => policyBuilder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 }
+
 
 app.UseRouting();
 

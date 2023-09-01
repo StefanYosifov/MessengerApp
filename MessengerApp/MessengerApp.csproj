@@ -8,10 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.20" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.20" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="6.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.20" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -24,6 +28,7 @@
     <ProjectReference Include="..\MessengerApp.Core.Services\MessengerApp.Core.Services.csproj" />
     <ProjectReference Include="..\MessengerApp.Data.DbContext\MessengerApp.Data.DbContext.csproj" />
     <ProjectReference Include="..\MessengerApp.Data.Models\MessengerApp.Data.Models.csproj" />
+    <ProjectReference Include="..\MessengerApp.Infrastucture.Utilities\MessengerApp.Common.Utilities.csproj" />
   </ItemGroup>
 
 </Project>
