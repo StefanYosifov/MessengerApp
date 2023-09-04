@@ -22,10 +22,10 @@
             return Ok(getFriendResult);
         }
 
-        [HttpPost("searchFriend")]
-        public async Task<IActionResult> SearchUsersByName(string name)
+        [HttpGet("searchFriend/{userName}")]
+        public async Task<IActionResult> SearchUsersByName([FromQuery]string userName)
         {
-            var lookupUserResult = await service.SearchUsersByName(name);
+            var lookupUserResult = await service.SearchUsersByName(userName);
             return Ok(lookupUserResult);
         }
     }

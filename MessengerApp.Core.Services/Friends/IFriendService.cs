@@ -7,11 +7,13 @@
 
         Task<ICollection<FriendViewModel>> GetFriends();
 
-        Task<string> SendFriendRequest();
+        Task<string> SendFriendRequest(string friendUserId);
 
-        Task<string> AcceptFriendRequest();
+        Task<string> AcceptFriendRequest(int requestId);
 
-        Task<ICollection<SearchFriendViewModel>> SearchUsersByName(string name);
+        Task<ICollection<SearchFriendViewModel>> SearchUsersByName(string userName);
+
+        Task<ICollection<FriendRequestsViewModel>> ViewMyFriendRequests();
 
     }
 }
