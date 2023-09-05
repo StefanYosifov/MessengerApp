@@ -13,7 +13,6 @@ using MessengerApp.Core.Services.Friends;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<MessengerDbContext>(options =>
     options.UseNpgsql(connectionString));
@@ -50,11 +49,8 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddMvc();
 builder.Services.AddControllers();
-
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IFriendService, FriendService>();
@@ -62,6 +58,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddAutoMapper(typeof(ProfileMapper));
 builder.Services.AddSignalR();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -84,4 +82,4 @@ app.UseAuthorization();
 
 app.UseEndpoints(e => { e.MapControllers(); });
 
-app.Run();
+await app.RunAsync();

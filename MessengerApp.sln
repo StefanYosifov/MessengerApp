@@ -15,19 +15,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{68B4E0B0-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ViewModels", "ViewModels", "{42A0FE5E-08CD-48BF-99EF-B65E2AFEF1EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengerApp.ViewModels", "MessengerApp.ViewModels\MessengerApp.ViewModels.csproj", "{B74BA46B-F93D-43B2-944D-9D971FBD6742}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessengerApp.ViewModels", "MessengerApp.ViewModels\MessengerApp.ViewModels.csproj", "{B74BA46B-F93D-43B2-944D-9D971FBD6742}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengerApp.Data.Models", "MessengerApp.Data.Models\MessengerApp.Data.Models.csproj", "{8A141DB0-14EC-4C41-A314-47F20B513B5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessengerApp.Data.Models", "MessengerApp.Data.Models\MessengerApp.Data.Models.csproj", "{8A141DB0-14EC-4C41-A314-47F20B513B5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengerApp.Data.DbContext", "MessengerApp.Data.DbContext\MessengerApp.Data.DbContext.csproj", "{38A74532-44E6-4FF8-BFC1-D4E455DDFE5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessengerApp.Data.DbContext", "MessengerApp.Data.DbContext\MessengerApp.Data.DbContext.csproj", "{38A74532-44E6-4FF8-BFC1-D4E455DDFE5F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengerApp.Core.Controllers", "MessengerApp.Core.Controllers\MessengerApp.Core.Controllers.csproj", "{70BF5652-82F1-4C23-A9EA-9686E8D7543D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessengerApp.Core.Controllers", "MessengerApp.Core.Controllers\MessengerApp.Core.Controllers.csproj", "{70BF5652-82F1-4C23-A9EA-9686E8D7543D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengerApp.Core.Services", "MessengerApp.Core.Services\MessengerApp.Core.Services.csproj", "{6969F77B-568D-4B24-BC06-24430F22D146}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessengerApp.Core.Services", "MessengerApp.Core.Services\MessengerApp.Core.Services.csproj", "{6969F77B-568D-4B24-BC06-24430F22D146}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengerApp.Infrastucture.Constants", "MessengerApp.Infrastucture.Constants\MessengerApp.Infrastucture.Constants.csproj", "{B6F0F291-7812-41FC-BE0A-618650D8F469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessengerApp.Infrastucture.Constants", "MessengerApp.Infrastucture.Constants\MessengerApp.Infrastucture.Constants.csproj", "{B6F0F291-7812-41FC-BE0A-618650D8F469}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengerApp.Infrastucture.Exceptions", "MessengerApp.Infrastucture.Exceptions\MessengerApp.Infrastucture.Exceptions.csproj", "{7E377614-339C-48C0-8352-5F46F8EF9A65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessengerApp.Infrastucture.Exceptions", "MessengerApp.Infrastucture.Exceptions\MessengerApp.Infrastucture.Exceptions.csproj", "{7E377614-339C-48C0-8352-5F46F8EF9A65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessengerApp.Common.Utilities", "MessengerApp.Infrastucture.Utilities\MessengerApp.Common.Utilities.csproj", "{D658BCE1-2D16-42FF-96F8-1FAA7EC823B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{D74D55E9-AF5B-4EDE-B841-2336A820AF2B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessengerApp.Core.Api", "MessengerApp.Core.Api\MessengerApp.Core.Api.csproj", "{8B25132F-7331-4DB6-BE34-8A957BD2E330}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +73,14 @@ Global
 		{7E377614-339C-48C0-8352-5F46F8EF9A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E377614-339C-48C0-8352-5F46F8EF9A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E377614-339C-48C0-8352-5F46F8EF9A65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D658BCE1-2D16-42FF-96F8-1FAA7EC823B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D658BCE1-2D16-42FF-96F8-1FAA7EC823B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D658BCE1-2D16-42FF-96F8-1FAA7EC823B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D658BCE1-2D16-42FF-96F8-1FAA7EC823B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B25132F-7331-4DB6-BE34-8A957BD2E330}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B25132F-7331-4DB6-BE34-8A957BD2E330}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B25132F-7331-4DB6-BE34-8A957BD2E330}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B25132F-7331-4DB6-BE34-8A957BD2E330}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +94,8 @@ Global
 		{6969F77B-568D-4B24-BC06-24430F22D146} = {1449B3E1-46E1-470C-8AA3-011C3453C30F}
 		{B6F0F291-7812-41FC-BE0A-618650D8F469} = {70ABEA68-03A6-4568-9E9B-02BE7D04D63F}
 		{7E377614-339C-48C0-8352-5F46F8EF9A65} = {70ABEA68-03A6-4568-9E9B-02BE7D04D63F}
+		{D658BCE1-2D16-42FF-96F8-1FAA7EC823B1} = {D74D55E9-AF5B-4EDE-B841-2336A820AF2B}
+		{8B25132F-7331-4DB6-BE34-8A957BD2E330} = {1449B3E1-46E1-470C-8AA3-011C3453C30F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {15C617EC-5114-4F1A-9979-EA21F7CDADB3}

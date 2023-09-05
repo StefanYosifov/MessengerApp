@@ -2,14 +2,21 @@
 {
     using System.Security.Claims;
 
+    using Data.DbContext;
+    using Data.Models;
+
     using Microsoft.AspNetCore.Http;
 
     public class UserService : IUserService
     {
-        public readonly ClaimsPrincipal user;
+        private readonly ClaimsPrincipal user;
+        private readonly MessengerDbContext context;
 
-        public UserService(IHttpContextAccessor user)
+        public UserService(
+            IHttpContextAccessor user, 
+            MessengerDbContext context)
         {
+            this.context = context;
             this.user = user.HttpContext!.User;
         }
 
@@ -18,6 +25,12 @@
 
         public string GetUserName()
             => user.Identity!.Name!;
-        
+
+        public async Task<ApplicationUser> ReturnUser()
+        {
+            var userId = this.GetUserId();
+            return (await context.Users.FindAsync(userId))!;
+        }
+
     }
 }

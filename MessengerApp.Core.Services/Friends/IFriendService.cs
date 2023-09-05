@@ -9,7 +9,7 @@
 
         Task<string> SendFriendRequest(string friendUserId);
 
-        Task<string> AcceptFriendRequest(int requestId);
+        Task<string> AcceptFriendRequest(RespondToFriendRequest request);
 
         Task<ICollection<SearchFriendViewModel>> SearchUsersByName(string userName);
 

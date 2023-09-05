@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MessengerApp.Data.DbContext\MessengerApp.Data.DbContext.csproj" />
     <ProjectReference Include="..\MessengerApp.Data.Models\MessengerApp.Data.Models.csproj" />
     <ProjectReference Include="..\MessengerApp.ViewModels\MessengerApp.ViewModels.csproj" />
   </ItemGroup>

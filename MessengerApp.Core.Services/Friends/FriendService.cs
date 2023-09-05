@@ -36,8 +36,11 @@
         public async Task<ICollection<FriendViewModel>> GetFriends()
         {
             var userId = userService.GetUserId();
-            return await context.Users
-                .Where(x => x.Friends.Any(f => f.FriendId == userId))
+
+            var friends = await context.FriendRequests.ToArrayAsync();
+
+            return await context.Friends
+                .Where(f=>f.UserId==userId)
                 .ProjectTo<FriendViewModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
         }
@@ -70,7 +73,7 @@
             {
                 SenderId = userId,
                 ReceiverUserId = friendUserId,
-                Status = FriendRequestStatus.Pending 
+                Status = FriendRequestStatus.Pending
             };
 
             context.FriendRequests.Add(newFriendRequest);
@@ -79,11 +82,14 @@
             return "Friend request sent successfully.";
         }
 
-        public async Task<string> AcceptFriendRequest(int requestId)
+        public async Task<string> AcceptFriendRequest(RespondToFriendRequest request)
         {
-            var userId= userService.GetUserId();
+            var userId = userService.GetUserId();
 
-            var findRequest = await context.FriendRequests.FindAsync(requestId);
+            var findRequest = await context.FriendRequests
+                .Include(f=>f.Receiver)
+                .Include(f=>f.Sender)
+                .FirstOrDefaultAsync(fr=>fr.Id==request.RequestId);
 
             if (findRequest == null)
             {
@@ -104,7 +110,7 @@
 
             await context.SaveChangesAsync();
 
-            return
+            return string.Format(FriendMessages.SuccessfullyAcceptedFriendRequest, findRequest.Sender.UserName);
         }
 
         public async Task<ICollection<SearchFriendViewModel>> SearchUsersByName(string userName)
@@ -116,17 +122,19 @@
                 .Select(f => f.FriendId == userId ? f.Friends.Id : f.UserId)
                 .ToList();
 
-            
+
             return await searchedUsers
-                .Include(u=>u.Friends)
-                .Select(x=>new
+                .Include(u => u.Friends)
+                .Select(x => new
                 {
                     x.UserName,
                     x.Id,
                     x.ImageUrl,
                     x.Friends
                 })
-                .Where(u => u.UserName.ToLower().Contains(userName.ToLower()) && u.Id!=userId && u.Friends.Any(f => friends.Any(fr => fr == f.UserId)))
+                .Where(u => u.UserName.ToLower()
+                    .Contains(userName.ToLower()) && u.Id != userId
+                                                  && u.Friends.Any(f => friends.Any(fr => fr == f.UserId)))
                 .Take(12) //todo Change the magic number later on
                 .ProjectTo<SearchFriendViewModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
@@ -135,12 +143,13 @@
 
         public async Task<ICollection<FriendRequestsViewModel>> ViewMyFriendRequests()
         {
-            var userId= userService.GetUserId();
+            var userId = userService.GetUserId();
 
             return await context.FriendRequests
                 .Where(fr => fr.ReceiverUserId == userId)
                 .ProjectTo<FriendRequestsViewModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
         }
+
     }
 }
