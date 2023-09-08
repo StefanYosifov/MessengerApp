@@ -27,10 +27,7 @@
 
         public virtual DbSet<ApplicationUser> Users { get; set; } = null!;
 
-        public virtual DbSet<Friend> Friends { get; set; } = null!;
-
-        public virtual DbSet<FriendRequest> FriendRequests { get; set; } = null!;
-
+        public virtual DbSet<FriendShip> FriendShips { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

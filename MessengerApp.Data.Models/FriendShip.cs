@@ -3,9 +3,9 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    using DbContext.Enumeration;
+    using Enums;
 
-    public class FriendRequest
+    public class FriendShip
     {
 
         [Key]

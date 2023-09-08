@@ -1,4 +1,4 @@
-﻿namespace MessengerApp.Data.DbContext.Enumeration
+﻿namespace MessengerApp.Data.Models.Enums
 {
     public enum FriendRequestStatus
     {

@@ -9,21 +9,17 @@
 
         public ApplicationUser()
         {
-            this.Friends = new HashSet<Friend>();
-            this.SentFriendRequests = new HashSet<FriendRequest>();
-            this.ReceivedFriendRequests = new HashSet<FriendRequest>(); 
+            this.SentFriendRequests = new HashSet<FriendShip>();
+            this.ReceivedFriendRequests = new HashSet<FriendShip>(); 
         }
 
         public string? ImageUrl { get; set; }
 
-        [InverseProperty("Friends")]
-        public ICollection<Friend> Friends { get; set; }
-
         [InverseProperty("Sender")]
-        public ICollection<FriendRequest> SentFriendRequests { get; set; }
+        public ICollection<FriendShip> SentFriendRequests { get; set; }
 
         [InverseProperty("Receiver")]
-        public ICollection<FriendRequest> ReceivedFriendRequests { get; set; }
+        public ICollection<FriendShip> ReceivedFriendRequests { get; set; }
 
     }
 }

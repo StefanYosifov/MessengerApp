@@ -20,8 +20,8 @@
     public class FriendService : IFriendService
     {
         private readonly MessengerDbContext context;
-        private readonly IUserService userService;
         private readonly IMapper mapper;
+        private readonly IUserService userService;
 
         public FriendService(
             MessengerDbContext context,
@@ -35,13 +35,18 @@
 
         public async Task<ICollection<FriendViewModel>> GetFriends()
         {
+
             var userId = userService.GetUserId();
 
-            var friends = await context.FriendRequests.ToArrayAsync();
+            var friends = PrivateGetUserFriends();
 
-            return await context.Friends
-                .Where(f=>f.UserId==userId)
-                .ProjectTo<FriendViewModel>(mapper.ConfigurationProvider)
+            return await friends
+                .Select(f => new FriendViewModel
+                {
+                    FriendShipId = f.Id,
+                    FriendName = f.ReceiverUserId == userId ? f.Receiver.UserName : f.Sender.UserName,
+                    FriendProfilePicture = f.ReceiverUserId == userId ? f.Receiver.ImageUrl : f.Sender.ImageUrl
+                })
                 .ToArrayAsync();
         }
 
@@ -49,34 +54,29 @@
         {
             var userId = userService.GetUserId();
 
-            var areAlreadyFriends = await context.Friends
-                .AnyAsync(f =>
-                    (f.UserId == userId && f.FriendId == friendUserId) ||
-                    (f.UserId == friendUserId && f.FriendId == userId));
+            var findFriendShip = await context.FriendShips
+                .FirstOrDefaultAsync(f =>
+                    (f.SenderId == userId && f.ReceiverUserId == friendUserId) ||
+                    (f.SenderId == friendUserId && f.ReceiverUserId == userId));
 
-            if (areAlreadyFriends)
-            {
-                throw new ServiceExceptions(FriendMessages.AlreadyFriends);
-            }
-
-            var friendRequestExists = await context.FriendRequests
-                .AnyAsync(fr =>
-                    (fr.SenderId == userId && fr.ReceiverUserId == friendUserId) ||
-                    (fr.SenderId == friendUserId && fr.ReceiverUserId == userId));
-
-            if (friendRequestExists)
+            if (findFriendShip != null)
             {
                 throw new ServiceExceptions(FriendMessages.AlreadySentFriendRequest);
             }
 
-            var newFriendRequest = new FriendRequest
+            if (findFriendShip?.Status == FriendRequestStatus.Accepted)
+            {
+                throw new ServiceExceptions(FriendMessages.AlreadyFriends);
+            }
+
+            var newFriendRequest = new FriendShip
             {
                 SenderId = userId,
                 ReceiverUserId = friendUserId,
                 Status = FriendRequestStatus.Pending
             };
 
-            context.FriendRequests.Add(newFriendRequest);
+            context.FriendShips.Add(newFriendRequest);
             await context.SaveChangesAsync();
 
             return "Friend request sent successfully.";
@@ -86,10 +86,10 @@
         {
             var userId = userService.GetUserId();
 
-            var findRequest = await context.FriendRequests
-                .Include(f=>f.Receiver)
-                .Include(f=>f.Sender)
-                .FirstOrDefaultAsync(fr=>fr.Id==request.RequestId);
+            var findRequest = await context.FriendShips
+                .Include(f => f.Receiver)
+                .Include(f => f.Sender)
+                .FirstOrDefaultAsync(fr => fr.Id == request.RequestId);
 
             if (findRequest == null)
             {
@@ -116,40 +116,37 @@
         public async Task<ICollection<SearchFriendViewModel>> SearchUsersByName(string userName)
         {
             var userId = userService.GetUserId();
-            var searchedUsers = context.Users.AsQueryable();
-            var friends = context.Friends
-                .Where(f => f.FriendId == userId || f.UserId == userId)
-                .Select(f => f.FriendId == userId ? f.Friends.Id : f.UserId)
-                .ToList();
 
+            // todo Maybe change to hashset for optimization later on
+            var friendIds = await
+                PrivateGetUserFriends()
+                    .Select(x => x.ReceiverUserId == userId ? x.ReceiverUserId : x.SenderId)
+                    .ToArrayAsync();
 
-            return await searchedUsers
-                .Include(u => u.Friends)
-                .Select(x => new
-                {
-                    x.UserName,
-                    x.Id,
-                    x.ImageUrl,
-                    x.Friends
-                })
-                .Where(u => u.UserName.ToLower()
-                    .Contains(userName.ToLower()) && u.Id != userId
-                                                  && u.Friends.Any(f => friends.Any(fr => fr == f.UserId)))
-                .Take(12) //todo Change the magic number later on
+            return await context.Users
+                .Where(u => u.UserName.Contains(userName) && u.Id != userId && friendIds.All(friendId => friendId != u.Id))
                 .ProjectTo<SearchFriendViewModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
-
         }
 
         public async Task<ICollection<FriendRequestsViewModel>> ViewMyFriendRequests()
         {
             var userId = userService.GetUserId();
 
-            return await context.FriendRequests
+            return await context.FriendShips
                 .Where(fr => fr.ReceiverUserId == userId)
                 .ProjectTo<FriendRequestsViewModel>(mapper.ConfigurationProvider)
                 .ToArrayAsync();
         }
 
+        // Returns IQueryable in order to be able to map it via auto mapper
+        private IQueryable<FriendShip> PrivateGetUserFriends()
+        {
+            var userId = userService.GetUserId();
+
+            return context.FriendShips
+                .Where(f => (f.SenderId == userId || f.ReceiverUserId == userId) &&
+                            f.Status == FriendRequestStatus.Accepted);
+        }
     }
 }
