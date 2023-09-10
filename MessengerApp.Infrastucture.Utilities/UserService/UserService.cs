@@ -26,9 +26,12 @@
         public string GetUserName()
             => user.Identity!.Name!;
 
-        public async Task<ApplicationUser> ReturnUser()
+        public async Task<ApplicationUser> GetUser(string? userId)
         {
-            var userId = this.GetUserId();
+            if (string.IsNullOrEmpty(userId))
+            {
+                userId = this.GetUserId();
+            }
             return (await context.Users.FindAsync(userId))!;
         }
 

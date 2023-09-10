@@ -4,11 +4,9 @@
 
     public interface IUserService
     {
-
-
         string GetUserId();
         string GetUserName();
 
-        Task<ApplicationUser> ReturnUser();
+        Task<ApplicationUser> GetUser(string? userId);
     }
 }

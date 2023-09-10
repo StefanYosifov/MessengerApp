@@ -1,9 +1,10 @@
 ﻿namespace MessengerApp.Data.DbContext
 {
-    using Data.Models;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
+
+    using Models;
 
     public class MessengerDbContext : IdentityDbContext
     {
@@ -17,6 +18,18 @@
             this.configuration = configuration;
         }
 
+        public virtual DbSet<ApplicationUser> Users { get; set; } = null!;
+
+        public virtual DbSet<FriendShip> FriendShips { get; set; } = null!;
+
+        public virtual DbSet<Message> Messages { get; set; } = null!;
+
+        public virtual DbSet<Reply> Replies { get; set; } = null!;
+
+        public virtual DbSet<Conversation> Conversations { get; set; } = null!;
+
+        public virtual DbSet<UserConversation> UserConversations { get; set; } = null!;
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -25,12 +38,14 @@
             }
         }
 
-        public virtual DbSet<ApplicationUser> Users { get; set; } = null!;
-
-        public virtual DbSet<FriendShip> FriendShips { get; set; } = null!;
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<UserConversation>()
+                .HasKey(k => new
+                {
+                    k.ConversationId, k.UserId
+                });
+
             base.OnModelCreating(modelBuilder);
         }
     }

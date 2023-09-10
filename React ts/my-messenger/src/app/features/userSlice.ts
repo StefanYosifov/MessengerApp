@@ -2,15 +2,21 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface IUser {
     isAuthenticated: boolean
-    userInfo: string | null;
+    userInfo: {
+        id?: string | null,
+        token?:string | null
+        profilePicture?:string | null,
+    }
 }
 
 const userJson = localStorage.getItem('user');
 const initialState: IUser = {
-    userInfo: userJson
-        ? JSON.parse(userJson) as string | null
-        : null,
-    isAuthenticated: userJson ? true : false
+    userInfo: {
+        id: null,
+        token: null,
+        profilePicture: null,
+    },
+    isAuthenticated: userJson ? true : false,
 };
 
 const authSlice = createSlice({
@@ -23,7 +29,7 @@ const authSlice = createSlice({
             localStorage.setItem('user', JSON.stringify(action.payload))
         },
         logout: (state, action) => {
-            state.userInfo = null;
+            state.userInfo = {};
             localStorage.removeItem('user');
         }
     }

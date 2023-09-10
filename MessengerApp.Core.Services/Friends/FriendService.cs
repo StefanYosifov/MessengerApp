@@ -5,6 +5,8 @@
 
     using Common.Utilities.UserService;
 
+    using Conversations;
+
     using Data.DbContext;
     using Data.Models;
     using Data.Models.Enums;
@@ -22,15 +24,18 @@
         private readonly MessengerDbContext context;
         private readonly IMapper mapper;
         private readonly IUserService userService;
+        private readonly IConversationService conversationService;
 
         public FriendService(
             MessengerDbContext context,
             IUserService userService,
-            IMapper mapper)
+            IMapper mapper,
+            IConversationService conversationService)
         {
             this.context = context;
             this.userService = userService;
             this.mapper = mapper;
+            this.conversationService = conversationService;
         }
 
         public async Task<ICollection<FriendViewModel>> GetFriends()
@@ -109,6 +114,9 @@
             findRequest.Status = FriendRequestStatus.Accepted;
 
             await context.SaveChangesAsync();
+            var isCreatingConversationSuccessful = await conversationService.CreateConversationUponAddingFriend(findRequest.SenderId);
+
+
 
             return string.Format(FriendMessages.SuccessfullyAcceptedFriendRequest, findRequest.Sender.UserName);
         }

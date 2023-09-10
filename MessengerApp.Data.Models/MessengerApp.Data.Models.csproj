@@ -10,4 +10,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.20" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MessengerApp.Infrastucture.Constants\MessengerApp.Infrastucture.Constants.csproj" />
+  </ItemGroup>
+
 </Project>
